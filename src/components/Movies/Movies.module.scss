@@ -1,0 +1,129 @@
+@use "/src/styles/mixins" as *;
+
+.wrapper {
+  margin: 0 auto;
+  @include for-tablet-down {
+    max-width: 630px;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 56px;
+    margin: 0 0 50px;
+  }
+
+  .actionBlock {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    justify-content: space-between;
+    margin: 0 auto 40px;
+    max-width: 630px;
+  }
+
+  .searchField {
+    position: relative;
+    margin: 0 auto 24px;
+    max-width: 630px;
+    width: 100%;
+    display: flex;
+
+    input {
+      border: 1px solid #dcdce5;
+      padding: 0 40px 0 24px;
+      height: 62px;
+      width: 100%;
+      border-radius: 16px;
+      background: #f2f1ff;
+      outline: none;
+      color: #2a313c;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22px;
+    }
+
+    .clearButton {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: #ccc;
+      color: #fff;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #999;
+      }
+    }
+  }
+
+  .notFound {
+    margin: 24px 0 0;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 30px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .movieList {
+    display: grid;
+    gap: 28px;
+    grid-template-columns: repeat(3, 1fr);
+
+    @include for-desktop-down {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include for-tablet-down {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .movieCard {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 31px 27px;
+      border: 1px solid #dcdce5;
+      border-radius: 28px;
+      min-height: 250px;
+
+      .movieTitle {
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 36px;
+      }
+
+      .movieField {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 30px;
+      }
+    }
+  }
+
+  .buttonWrapper {
+    margin: auto 0 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 24px;
+
+    svg {
+      color: #8631ec;
+      margin: 0 12px 0 0;
+    }
+  }
+}

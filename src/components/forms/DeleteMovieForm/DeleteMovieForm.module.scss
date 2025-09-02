@@ -1,0 +1,23 @@
+@use "/src/styles/mixins" as *;
+
+.form {
+  display: grid;
+  gap: 20px;
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    button {
+      &:first-of-type {
+        background-color: #eee;
+        color: #333;
+
+        &:hover {
+          background-color: #ddd;
+        }
+      }
+    }
+  }
+}

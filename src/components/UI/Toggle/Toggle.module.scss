@@ -1,0 +1,84 @@
+@use "/src/styles/mixins" as *;
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 260px;
+  height: 50px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .text {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      pointer-events: none;
+      color: #fff;
+      pointer-events: none;
+    }
+
+    .knob {
+      position: absolute;
+      height: 35px;
+      width: 35px;
+      left: 4px;
+      bottom: 7px;
+      background-color: transparent;
+      transition: 0.4s;
+      border-radius: 50%;
+
+      svg {
+        width: 100%;
+        height: 100%;
+
+        path {
+          fill: #808080;
+        }
+      }
+    }
+  }
+
+  input:checked + .slider {
+    background-color: #2196f3;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+  }
+
+  input:hover + .slider {
+    background-color: #5e24a5;
+  }
+
+  input:checked + .slider .knob {
+    transform: translateX(215px);
+
+    svg {
+      width: 100%;
+      height: 100%;
+
+      path {
+        fill: #fff200;
+      }
+    }
+  }
+}

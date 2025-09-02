@@ -1,0 +1,20 @@
+@use "/src/styles/mixins" as *;
+
+.actionButton {
+  background: #8631ec;
+  width: 100%;
+  font-size: 18px;
+  color: #fff;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 50px;
+  border-radius: 8px;
+  padding: 0 24px;
+
+  @include hover-supported {
+    background-color: #5e24a5;
+  }
+}
