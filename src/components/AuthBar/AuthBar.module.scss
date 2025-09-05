@@ -1,0 +1,28 @@
+@use "/src/styles/mixins" as *;
+
+.authbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: calc(1200px + 32px);
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  position: relative;
+
+  .authWrapper {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+    justify-content: space-around;
+
+    @include for-desktop-down {
+      flex-wrap: wrap;
+    }
+
+    button {
+      max-width: 260px;
+    }
+  }
+}

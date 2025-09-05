@@ -24,12 +24,12 @@ body {
 .wrapper {
   max-width: calc(1200px + 32px);
   width: 100%;
-  padding: 30px 16px;
+  padding: 0 16px;
   margin-left: auto;
   margin-right: auto;
 
   @include for-desktop-up {
-    padding: 65px 32px;
+    padding: 0 32px;
   }
 }
 

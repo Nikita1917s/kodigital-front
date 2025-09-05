@@ -1,1 +1,0 @@
-export const JSON_URL = "https://swapi.info/api";

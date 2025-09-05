@@ -1,26 +1,30 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { fetchUserByTitle } from "@services/api";
-import type { Movie } from "@/types/Movie";
-import { UserDetails } from "@components/UserDetails";
+import { MovieDetails } from "@components/MovieDetails";
 import { Spinner } from "@/components/UI/Spinner";
-import { toast } from "react-toastify";
+import { useGetMovieByTitleQuery } from "@/store/services/moviesApi";
+import { useAuth } from "@/contexts/auth-context";
 
 export const MovieDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [user, setUser] = useState<Movie | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { username } = useAuth();
+  const title = id ?? "";
 
-  useEffect(() => {
-    if (!id) return;
-    fetchUserByTitle(Number(id))
-      .then(setUser)
-      .catch((err) => toast.error(`Failed to load users: ${err.message}`))
-      .finally(() => setLoading(false));
-  }, [id]);
+  const {
+    data: movie,
+    isLoading,
+    isFetching,
+    error,
+  } = useGetMovieByTitleQuery({ title, username }, { skip: !title });
 
-  if (loading) return <Spinner />;
-  if (!user) return <div role="alert">User not found.</div>;
+  if (!title) return <div role="alert">No title provided.</div>;
+  if (isLoading || isFetching) return <Spinner />;
 
-  return <UserDetails user={user} />;
+  if (error || !movie) {
+    return (
+      <div role="alert">
+        Movie not found: <strong>{title}</strong>
+      </div>
+    );
+  }
+  return <MovieDetails movie={movie} />;
 };

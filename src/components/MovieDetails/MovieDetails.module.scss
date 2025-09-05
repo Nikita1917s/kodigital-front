@@ -11,39 +11,38 @@
   border-radius: 28px;
   min-height: 250px;
 
-  .profilePhoto {
+  .movieIcon {
     width: 180px;
     height: 180px;
     border-radius: 50%;
     margin: 0 auto;
   }
 
-  .userUserName {
+  .title {
     font-size: 28px;
     font-weight: 500;
     line-height: 36px;
   }
 
+  .movieCard {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    .movieTitle {
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 36px;
+    }
+
+    .movieField {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 30px;
+    }
+  }
+
   .buttonWrapper {
     margin: auto 0 0;
-
-    button {
-      background: #8631ec;
-      width: 100%;
-      font-size: 18px;
-      color: #fff;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      height: 50px;
-      border-radius: 8px;
-      padding: 0 24px;
-
-      @include hover-supported {
-        background-color: #5e24a5;
-      }
-    }
   }
 }

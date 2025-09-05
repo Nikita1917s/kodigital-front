@@ -7,7 +7,7 @@ import { EditIcon, PlusIcon, StarIcon, TrashIcon } from "@components/UI/Icons";
 import { ActionButton } from "@components/UI/ActionButton";
 import { ModalWindow } from "@components/UI/ModalWindow";
 import { AddMovieForm } from "@components/forms/AddMovieForm";
-import { DeleteMovieForm } from "../forms/DeleteMovieForm";
+import { DeleteMovieForm } from "@components/forms/DeleteMovieForm";
 import { EditMovieForm } from "@components/forms/EditMovieForm";
 import { formatTitle } from "@/utils/formatTitle";
 
@@ -15,12 +15,14 @@ type ModalMode = "create" | "edit" | "delete";
 
 export interface MoviesProps {
   movies: Movie[];
-  search: string,
+  search: string;
   setSearch: (value: string) => void;
-  onCreate: (movie: Movie) => boolean;
-  onUpdate: (movie: Movie, originalTitle: string) => boolean;
+  onCreate: (movie: Movie) => boolean | Promise<boolean>;
+  onUpdate: (movie: Movie, originalTitle: string) => boolean | Promise<boolean>;
   onToggleFavourite: (Title: string) => void;
   onDelete: (Title: string) => void;
+  isLoggedIn: boolean;
+  requireLogin: () => void;
 }
 
 export const Movies = ({
@@ -31,6 +33,8 @@ export const Movies = ({
   onUpdate,
   onToggleFavourite,
   onDelete,
+  isLoggedIn,
+  requireLogin,
 }: MoviesProps) => {
   const navigate = useNavigate();
 
@@ -70,7 +74,9 @@ export const Movies = ({
           changeToggleState={setShowOnlyFavourite}
         />
         <div className={styles["buttonWrapper"]}>
-          <ActionButton onClick={openCreate}>
+          <ActionButton
+            onClick={() => (isLoggedIn ? openCreate() : requireLogin())}
+          >
             <PlusIcon /> Add Movie
           </ActionButton>
         </div>
@@ -100,12 +106,14 @@ export const Movies = ({
       <div className={styles["movieList"]}>
         {searched.map((movie) => (
           <div key={movie.Title} className={styles["movieCard"]}>
-            <p className={styles["movieTitle"]}>Title: {formatTitle(movie.Title)}</p>
+            <p className={styles["movieTitle"]}>
+              Title: {formatTitle(movie.Title)}
+            </p>
             <p className={styles["movieField"]}>Year: {movie.Year}</p>
             <p className={styles["movieField"]}>Runtime: {movie.Runtime}</p>
             <p className={styles["movieField"]}>Genre: {movie.Genre}</p>
             <p className={styles["movieField"]}>Director: {movie.Director}</p>
-            <div className={styles["buttonWrapper"]}>
+            <div className={styles["detailedButtonWrapper"]}>
               <ActionButton
                 onClick={() =>
                   navigate(`/movies/${encodeURIComponent(movie.Title)}`)
@@ -117,7 +125,7 @@ export const Movies = ({
             <div className={styles["buttonWrapper"]}>
               <button
                 type="button"
-                onClick={() => openEdit(movie)}
+                onClick={() => (isLoggedIn ? openEdit(movie) : requireLogin())}
                 aria-label="Edit movie"
               >
                 <EditIcon size={40} />
@@ -126,7 +134,9 @@ export const Movies = ({
               <button
                 type="button"
                 className={styles["buttonFavourite"]}
-                onClick={() => onToggleFavourite(movie.Title)}
+                onClick={() =>
+                  isLoggedIn ? onToggleFavourite(movie.Title) : requireLogin()
+                }
                 aria-label={
                   movie.Favourite
                     ? "Remove from favourites"
@@ -140,7 +150,7 @@ export const Movies = ({
               </button>
               <button
                 type="button"
-                onClick={() => openDelete(movie)}
+                onClick={() => (isLoggedIn ? openDelete(movie) : requireLogin())}
                 aria-label="Delete movie"
               >
                 <TrashIcon size={40} />
@@ -161,7 +171,7 @@ export const Movies = ({
       <ModalWindow open={openModal} onClose={() => setOpenModal(false)}>
         {modalMode === "create" && (
           <>
-            <h2 style={{ marginTop: 0 }}>Add a new movie</h2>
+            <h2>Add a new movie</h2>
             <AddMovieForm
               onSubmit={(values) => {
                 const ok = onCreate(values);
@@ -174,7 +184,7 @@ export const Movies = ({
 
         {modalMode === "edit" && selected && (
           <>
-            <h2 style={{ marginTop: 0 }}>Edit movie</h2>
+            <h2>Edit movie</h2>
             <EditMovieForm
               defaultValues={selected}
               onSubmit={(values) => {
@@ -188,7 +198,7 @@ export const Movies = ({
 
         {modalMode === "delete" && selected && (
           <>
-            <h2 style={{ marginTop: 0 }}>Delete movie</h2>
+            <h2>Delete movie</h2>
             <DeleteMovieForm
               Title={selected.Title}
               onCancel={() => setOpenModal(false)}

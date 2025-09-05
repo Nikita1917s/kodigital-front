@@ -114,8 +114,21 @@
     }
   }
 
-  .buttonWrapper {
+  .detailedButtonWrapper {
     margin: auto 0 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 24px;
+
+    svg {
+      color: #8631ec;
+      margin: 0 12px 0 0;
+    }
+  }
+
+  .buttonWrapper {
+    margin: 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
