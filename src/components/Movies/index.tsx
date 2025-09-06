@@ -2,8 +2,8 @@ import { useState, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Movie } from "@/types/Movie";
 import styles from "./Movies.module.scss";
-import { Toggle } from "@components/UI/Toggle";
 import { EditIcon, PlusIcon, StarIcon, TrashIcon } from "@components/UI/Icons";
+import { Toggle } from "@components/UI/Toggle";
 import { ActionButton } from "@components/UI/ActionButton";
 import { ModalWindow } from "@components/UI/ModalWindow";
 import { AddMovieForm } from "@components/forms/AddMovieForm";
@@ -106,8 +106,9 @@ export const Movies = ({
       <div className={styles["movieList"]}>
         {searched.map((movie) => (
           <div key={movie.Title} className={styles["movieCard"]}>
-            <p className={styles["movieTitle"]}>
-              Title: {formatTitle(movie.Title)}
+            <p className={styles["movieTitle"]} role="heading" aria-level={2}>
+              <span>Title: </span>
+              <span data-testid="movie-title">{formatTitle(movie.Title)}</span>
             </p>
             <p className={styles["movieField"]}>Year: {movie.Year}</p>
             <p className={styles["movieField"]}>Runtime: {movie.Runtime}</p>
@@ -150,7 +151,9 @@ export const Movies = ({
               </button>
               <button
                 type="button"
-                onClick={() => (isLoggedIn ? openDelete(movie) : requireLogin())}
+                onClick={() =>
+                  isLoggedIn ? openDelete(movie) : requireLogin()
+                }
                 aria-label="Delete movie"
               >
                 <TrashIcon size={40} />
