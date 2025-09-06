@@ -26,7 +26,11 @@ export const CreateUserForm = ({
   });
 
   return (
-    <form className={styles["form"]} onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form
+      className={styles["form"]}
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+    >
       <div className={styles["row"]}>
         <label htmlFor="username">User name</label>
         <input

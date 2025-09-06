@@ -33,7 +33,8 @@ export const AddMovieForm = ({
   const validateYear = (value: string) => {
     const yearNum = Number(value);
     if (!/^\d{4}$/.test(value)) return "Use 4 digits, e.g. 1982";
-    if (yearNum < 1888 || yearNum > 2100) return "Enter a realistic year (1888–2100)";
+    if (yearNum < 1888 || yearNum > 2100)
+      return "Enter a realistic year (1888–2100)";
     return true;
   };
 
