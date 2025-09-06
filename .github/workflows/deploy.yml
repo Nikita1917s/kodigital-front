@@ -1,39 +1,49 @@
 name: CI & Deploy to GitHub Pages
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
 on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "20" # match your project's Node requirement
-          cache: npm
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test -- --watchAll=false --passWithNoTests
+      - name: Tests
+        run: npm test -- --passWithNoTests
+
+      # Inject your prod env for Vite build
+      - name: Create .env.production from secrets
+        run: |
+          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" > .env.production
+          cat .env.production
 
       - name: Build
         run: npm run build
 
+      # SPA fallback for GitHub Pages (React Router)
+      - name: Add 404.html fallback
+        run: cp dist/index.html dist/404.html
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # the target branch
-          folder: dist # deploy this folder
+          branch: gh-pages
+          folder: dist
           clean: true
           token: ${{ secrets.GITHUB_TOKEN }}

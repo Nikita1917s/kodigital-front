@@ -1,7 +1,7 @@
 {
-  "name": "kodigital-test-task",
+  "name": "kodigital-front",
   "private": true,
-  "homepage": "https://nikita1917s.github.io/kodigital-test-task/",
+  "homepage": "https://nikita1917s.github.io/kodigital-front/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

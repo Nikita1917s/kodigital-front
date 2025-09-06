@@ -4,7 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
 export default defineConfig({
-  base: "/kodigital-test-task/",
+  base: "/kodigital-front/",
   plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {
